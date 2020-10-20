@@ -1,6 +1,6 @@
 import konlpy
 import nltk
-import tqdm
+from tqdm import tqdm
 import logging
 
 
@@ -37,7 +37,7 @@ def chunk_sentence(sentence) -> nltk.tree.Tree:
 
 def chunk_sentences(sentences) -> [nltk.tree.Tree]:
     trees = []
-    for sentence in tqdm.tqdm(sentences, desc="chunking sentences..."):
+    for sentence in tqdm(iterable=sentences, desc="chunking sentences..."):
         trees.append(chunk_sentence(sentence))
 
     return trees
