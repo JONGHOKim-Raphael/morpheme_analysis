@@ -1,11 +1,12 @@
 import konlpy
 import nltk
+import tqdm
 import logging
 
 
 logger = logging.getLogger(__name__)
 
-def chunk_sentence(sentence):
+def chunk_sentence(sentence) -> nltk.tree.Tree:
     # POS tag a sentence
     ## NOTE tag: Kkma, Komoran, Hannanum, Okt, Mecab
     tag = konlpy.tag.Kkma()
@@ -31,5 +32,12 @@ def chunk_sentence(sentence):
             logger.debug(' '.join((e[0] for e in list(subtree))))
             logger.debug(subtree.pformat())
 
-    # Display the chunk tree
-    #chunks.draw()
+    return chunks
+
+
+def chunk_sentences(sentences) -> [nltk.tree.Tree]:
+    trees = []
+    for sentence in tqdm.tqdm(sentences, desc="chunking sentences..."):
+        trees.append(chunk_sentence(sentence))
+
+    return trees
